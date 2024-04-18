@@ -10,7 +10,7 @@ public class prueba2 {
         Connection connection;
         System.setProperty("jdbc.drivers", "com.mysql.cj.jdbc.Driver");
         String url = "jdbc:mysql://localhost:3306/cuentas_bancarias?serverTimezone=UTC";
-        String user = "admin";
+        String user = "root";
         String pass = "admin";
         try{
             System.out.print("Introduzca el DNI : ");

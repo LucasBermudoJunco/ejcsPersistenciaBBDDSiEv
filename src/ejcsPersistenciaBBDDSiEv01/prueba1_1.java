@@ -16,7 +16,7 @@ public class prueba1_1 {
 
 //            System.setProperty("jdbc.drivers", "com.mysql.cj.jdbc.Driver");
         String url = "jdbc:mysql://localhost:3306/cuentas_bancarias?serverTimezone=UTC";
-        String user = "admin";
+        String user = "root";
         String pass = "admin";
         int opcion;
         try{
