@@ -3,35 +3,35 @@ package ejcsPersistenciaBBDDSiEv01;
 import java.sql.*;
 import java.util.Scanner;
 
-public class prueba3 {
+public class prueba4_Insert {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-        String dni, consulta, nombre, apellidos, tabla;
+        String insercion, nombre, tabla;
         Connection connection = null;
         System.setProperty("jdbc.drivers", "com.mysql.cj.jdbc.Driver");
         String url = "jdbc:mysql://localhost:3306/bdprueba1?serverTimezone=UTC";
         String user = "root";
         String pass = "admin";
         boolean conexionIniciadaCorrectamente = false;
+
         try {
-            System.out.print("Introduzca el nombre a introducir : ");
-            nombre = sc.nextLine();
-            System.out.print("Introduzca la tabla en la que quiere introdicurlo: ");
+            System.out.print("Introduzca la tabla que quiere insertar datos: ");
             tabla = sc.nextLine();
+            System.out.print("\nIntroduzca el nombre que quiere insertar:  ");
+            nombre = sc.nextLine();
 
             connection = DriverManager.getConnection(url, user, pass);
             conexionIniciadaCorrectamente = true;
-            System.out.println("Connection success.");
+            System.out.println("\nConnection success.");
             Statement st = connection.createStatement();
-            ResultSet rs;
-            consulta = "insert into " + tabla + " values('" + nombre + "')";
-            rs = st.executeQuery(consulta);
-            rs.next();
-            nombre = rs.getString("nombre");
-            apellidos = rs.getString("apellidos");
+
+            insercion = "insert into " + tabla + " values ('" + nombre + "')";
+            int cantFilasAfectadas = st.executeUpdate(insercion);
+            System.out.println("\nHan sido afectadas " + cantFilasAfectadas + "filas.");
+
             connection.close();
-            System.out.println("Connection closed.");
+            System.out.println("\nConnection closed.");
         } catch (SQLException sqle) {
             System.out.println(sqle.getMessage());
             if(conexionIniciadaCorrectamente){
