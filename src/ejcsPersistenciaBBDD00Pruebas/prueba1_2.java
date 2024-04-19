@@ -1,10 +1,10 @@
-package ejcsPersistenciaBBDDSiEv01;
+package ejcsPersistenciaBBDD00Pruebas;
 
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
-public class prueba1_1 {
+public class prueba1_2 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String dni, consulta, nombre, apellidos, cuenta;

@@ -1,4 +1,4 @@
-package ejcsPersistenciaBBDDSiEv01;
+package ejcsPersistenciaBBDD00Pruebas;
 
 import java.sql.*;
 import java.util.Scanner;
