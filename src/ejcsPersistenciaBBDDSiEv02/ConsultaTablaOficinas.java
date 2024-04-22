@@ -1,8 +1,9 @@
 package ejcsPersistenciaBBDDSiEv02;
 
 import java.sql.*;
-import java.util.Iterator;
-import java.util.Map;
+
+import ejcsPersistenciaBBDDSiEv00ClasesParaLaBaseDeDatos.Empresa;
+import ejcsPersistenciaBBDDSiEv00ClasesParaLaBaseDeDatos.Oficina;
 
 public class ConsultaTablaOficinas {
 
@@ -44,6 +45,8 @@ public class ConsultaTablaOficinas {
                 // Añadido de la oficina al objeto Empresa
                 corporacion.anyadirOficina(estaOficina);
             }
+            
+            con.close();
 
         } catch(SQLException excep){
             excep.printStackTrace();
@@ -53,15 +56,6 @@ public class ConsultaTablaOficinas {
         System.out.println("Oficinas de la empresa:");
 
         System.out.println(corporacion);
-
-//        int contador = 0;
-//        for(Map.Entry<Integer,Oficina> entrada : corporacion.getListaOficinas().entrySet()){
-//            Oficina estaOficina = entrada.getValue();
-//
-//            contador++;
-//
-//            System.out.println("\n" + contador + "ª oficina:\n" + estaOficina);
-//        }
 
     }
 

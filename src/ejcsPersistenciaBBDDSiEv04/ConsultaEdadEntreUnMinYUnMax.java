@@ -28,19 +28,20 @@ public class ConsultaEdadEntreUnMinYUnMax {
             datosIntrodValidos = true;
 
             try {
-                System.out.print("Introduce el valor mínimo para el sueldo que quieras consultar:  ");
+                System.out.print("Introduce el valor mínimo para la edad que quieras consultar:  ");
                 valorMin = sc.nextInt();
-                System.out.print("Introduce el valor máximo para el sueldo que quieras consultar:  ");
+                System.out.print("Introduce el valor máximo para la edad que quieras consultar:  ");
                 valorMax = sc.nextInt();
 
                 if(valorMin > valorMax){
                     datosIntrodValidos = false;
 
                     System.out.println("\nEl valor mínimo no puede ser más grande que el máximo." +
-                            "\nVuelve a introducirlos de nuevo.");
+                            "\nVuelve a introducirlos de nuevo.\n");
                 }
             } catch(InputMismatchException excep){
                 datosIntrodValidos = false;
+                sc.nextLine();
 
                 System.out.println("\nLos datos introducidos tienen que ser números enteros." +
                         "\nVuelva a introducirlos de nuevo.\n");
@@ -60,15 +61,15 @@ public class ConsultaEdadEntreUnMinYUnMax {
                     hayAlgunEmpleadoEnEseRango = true;
 
                     if(valorMin < valorMax) {
-                        System.out.println("\nLos datos del/de los empleado(s) que tiene(n) entre "
+                        System.out.println("\nEl nombre y la edad del/de los empleado(s) que tiene(n) entre "
                                 + valorMin + " y " + valorMax + " años es/son:");
                     } else {
-                        System.out.println("\nLos datos del/de los empleado(s) que tiene(n) "
+                        System.out.println("\nEl nombre y la edad del/de los empleado(s) que tiene(n) "
                                 + valorMin + " años es/son:");
                     }
 
-                    System.out.println("\nNombre\t\t\t\tEdad");
-                    System.out.println("--------------------------");
+                    System.out.println("\nNombre\t\t\tEdad");
+                    System.out.println("------------------------------");
 
                     mostrarMensajeInicial = false;
                 }
@@ -78,9 +79,9 @@ public class ConsultaEdadEntreUnMinYUnMax {
 
                 String estaLineaDeLaConsulta = "";
                 estaLineaDeLaConsulta += nombre;
-                if(nombre.length() < 8){
+                if(nombre.length() < 7){
                     estaLineaDeLaConsulta += "\t\t\t\t";
-                } else if(nombre.length() < 12){
+                } else if(nombre.length() < 9){
                     estaLineaDeLaConsulta += "\t\t\t";
                 } else if(nombre.length() < 16){
                     estaLineaDeLaConsulta += "\t\t";
@@ -101,10 +102,14 @@ public class ConsultaEdadEntreUnMinYUnMax {
                     System.out.println("\nNo hay ningún empleado que tenga " + valorMin + " años.");
                 }
             }
+            
+            con.close();
 
         } catch (SQLException excep){
             excep.printStackTrace();
         }
+        
+        sc.close();
 
     }
 

@@ -12,7 +12,7 @@ public class ConsultaOficinasEnDichaCiudad {
         Connection con;
         Statement st;
         ResultSet rs;
-        String url = "jdbc:mysql://localhost:3306/Empresa";
+        String url = "jdbc:mysql://localhost:3306/erdgvsrtdg";
         String user = "root";
         String password = "admin";
         String consulta;
@@ -67,10 +67,14 @@ public class ConsultaOficinasEnDichaCiudad {
             if(!tieneAlgunaOficina){
                 System.out.print("\nNo hay ninguna oficina de esta empresa en la ciudad ´´" + ciudad + "``.");
             }
+            
+            con.close();
 
         } catch(SQLException excep){
             excep.printStackTrace();
         }
+        
+        sc.close();
 
     }
 
