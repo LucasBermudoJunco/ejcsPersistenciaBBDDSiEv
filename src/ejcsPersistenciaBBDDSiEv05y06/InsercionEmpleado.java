@@ -1,4 +1,4 @@
-package ejcsPersistenciaBBDDSiEv05;
+package ejcsPersistenciaBBDDSiEv05y06;
 
 import java.sql.Date;
 import java.time.DateTimeException;

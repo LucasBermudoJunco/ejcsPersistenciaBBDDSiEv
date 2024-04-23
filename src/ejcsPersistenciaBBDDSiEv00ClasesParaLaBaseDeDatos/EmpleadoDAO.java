@@ -55,7 +55,7 @@ public class EmpleadoDAO {
 	}
 	
 	public static ArrayList<Empleado> read() {
-		ArrayList<Empleado> listaEmpleadosConsultados = new ArrayList<>();
+		ArrayList<Empleado> listaEmpleados = new ArrayList<>();
 		
 		try {
 			Connection con = connect();
@@ -74,16 +74,16 @@ public class EmpleadoDAO {
 				
 				Empleado empleadoConsultado = new Empleado(numemp,nombre,edad,oficina,puesto,contrato);
 				
-				listaEmpleadosConsultados.add(empleadoConsultado);
+				listaEmpleados.add(empleadoConsultado);
 			}
 			
 			con.close();
 		} catch(SQLException excep) {
-			System.out.println("Consulta del empleado fallida.");
+			System.out.println("Consulta de los empleados fallida.");
 			excep.getStackTrace();
 		}
 		
-		return listaEmpleadosConsultados;
+		return listaEmpleados;
 	}
 	
 	public static void update(Empleado empleadoIntrod){
