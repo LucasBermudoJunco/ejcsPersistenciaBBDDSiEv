@@ -1,7 +1,6 @@
 package ejcsPersistenciaBBDDSiEv01;
 
 import java.sql.*;
-import java.util.Scanner;
 
 public class ConsultaTablaEmpleados {
 
@@ -28,7 +27,7 @@ public class ConsultaTablaEmpleados {
             rs = st.executeQuery(consulta);
 
             System.out.println("\nInformación de la tabla Empleados:\n");
-            System.out.println("NumEmp\tNombre\t\t\t\tEdad\tOficina\tPuesto\t\t\t\t\t\tContrato");
+            System.out.println("NumEmp\tNombre\t\t\tEdad\tOficina\tPuesto\t\t\t\t\t\tContrato");
             System.out.println("------------------------------------------" +
                     "-----------------------------------------");
 
@@ -44,7 +43,7 @@ public class ConsultaTablaEmpleados {
 
                 // Creación del texto de cada línea de la consulta
                 String estaLineaDeLaConsulta = "";
-                estaLineaDeLaConsulta += numEmp + "\t\t";
+                estaLineaDeLaConsulta += numEmp + "\t";
                 estaLineaDeLaConsulta += nombre;
                 if(nombre.length() < 8){
                     estaLineaDeLaConsulta += "\t\t\t\t";
