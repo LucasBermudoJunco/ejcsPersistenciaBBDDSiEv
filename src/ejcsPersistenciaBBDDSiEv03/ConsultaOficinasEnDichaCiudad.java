@@ -17,7 +17,9 @@ public class ConsultaOficinasEnDichaCiudad {
         String password = "admin";
         String consulta;
         
-    	String datosDeLaConsulta = "Oficina\tCiudad\t\tSuperficie\tVentas\n";
+    	String datosDeLaConsulta = "Oficina\tCiudad\t\tSuperficie\tVentas"
+    			+ "\n------------------------"
+        		+ "------------------------\n";
         String ciudad;
         int oficina = 0, superficie = 0;
         double ventas = 0.0;

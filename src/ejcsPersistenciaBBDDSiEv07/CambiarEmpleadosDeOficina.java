@@ -1,11 +1,9 @@
 package ejcsPersistenciaBBDDSiEv07;
 
-//import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
-//import java.util.Iterator;
 import java.util.Scanner;
 
-//import ejcsPersistenciaBBDDSiEv00ClasesParaLaBaseDeDatos.Empleado;
 import ejcsPersistenciaBBDDSiEv00ClasesParaLaBaseDeDatos.EmpleadoDAO;
 import ejcsPersistenciaBBDDSiEv00ClasesParaLaBaseDeDatos.OficinaDAO;
 
@@ -35,6 +33,8 @@ public class CambiarEmpleadosDeOficina {
 					
 					System.out.print("\nLa oficina introducida no está en la empresa."
 							+ "\n\nIntroduzca de nuevo una oficina que esté en la empresa:  ");
+				} else {
+					System.out.println("\nNúmero de oficina válido.");
 				}
 			} catch(InputMismatchException excep) {
 				datosIntrodValidos = false;
@@ -64,6 +64,8 @@ public class CambiarEmpleadosDeOficina {
 					
 					System.out.print("\nLa oficina introducida no está en la empresa."
 							+ "\n\nIntroduzca de nuevo una oficina que esté en la empresa:  ");
+				} else {
+					System.out.println("\nNúmero de oficina válido.");
 				}
 			} catch(InputMismatchException excep) {
 				datosIntrodValidos = false;
@@ -76,48 +78,22 @@ public class CambiarEmpleadosDeOficina {
 		
 		// Visualización de los empleados de la ´´oficinaOrig``
 		System.out.println("\nLos datos del/de los empleado(s) que estaba(n) en la oficina " + oficinaOrig + " son:\n");
+		System.out.println(EmpleadoDAO.obtenerLaCabeceraDeTodosLosCamposDeLaTablaEmpleado() + "\n");
 		System.out.println(EmpleadoDAO.obtenerLosEmpleadosDeEstaOficina(oficinaOrig));
 		
-//		ArrayList<Empleado> listaEmpleadosDeLaOficinaOrig = EmpleadoDAO.selecEmpleadosDeEstaOficina(oficinaOrig);
-//		
-//		Iterator<Empleado> iteradorDeLosEmpleadosDeLaOficinaOrig = listaEmpleadosDeLaOficinaOrig.iterator();
-//		
-//		while(iteradorDeLosEmpleadosDeLaOficinaOrig.hasNext()) {
-//			Empleado esteEmpleado = iteradorDeLosEmpleadosDeLaOficinaOrig.next();
-//			
-//			System.out.println(esteEmpleado);
-//			
-//			if(iteradorDeLosEmpleadosDeLaOficinaOrig.hasNext()) {
-//				System.out.println();
-//			}
-//		}
-		
-//		// Obtención del ´´numemp`` de los empleados de la ´´oficinaOrig``
-//		ArrayList<Integer> numEmpDeLosEmpleadosDeLaOficinaOrig = EmpleadoDAO.obtenerLosNumEmpDeLosEmpleadosDeEstaOficina(oficinaOrig);
+		// Obtención del ´´numemp`` de los empleados de la ´´oficinaOrig``
+		ArrayList<Integer> numEmpDeLosEmpleadosDeLaOficinaOrig = EmpleadoDAO.obtenerLosNumEmpDeLosEmpleadosDeEstaOficina(oficinaOrig);
 		
 		// Cambio de los empleados de la ´´oficinaOrig`` a la ´´oficinaNueva``
 		EmpleadoDAO.cambiarEmpleadosDeUnaOficinaAOtra(oficinaOrig, oficinaNueva);
 		
 		// Visualización de los empleados cambiados a la ´´oficinaOrig``
-		System.out.println("\nLos datos del/de los empleado(s) cambiado(s) a la oficina " + oficinaNueva + " son:\n");
-		System.out.println(EmpleadoDAO.obtenerLosEmpleadosDeEstaOficina(oficinaNueva));
+		System.out.println("\n\n\nLos datos del/de los empleado(s) cambiado(s) a la oficina " + oficinaNueva + " son:\n");
+		System.out.println(EmpleadoDAO.obtenerLaCabeceraDeTodosLosCamposDeLaTablaEmpleado() + "\n");
+		System.out.println(EmpleadoDAO.obtenerTodosLosEmpleadosDeEstaListaDeEmpleados(numEmpDeLosEmpleadosDeLaOficinaOrig));
 		
-//		Iterator<Integer> iteradorDeLosNumEmpDeLosEmpleadosCambiadosALaOficinaNueva = numEmpDeLosEmpleadosDeLaOficinaOrig.iterator();
-//		
-//		while(iteradorDeLosNumEmpDeLosEmpleadosCambiadosALaOficinaNueva.hasNext()) {
-//			Integer esteNumEmp = iteradorDeLosNumEmpDeLosEmpleadosCambiadosALaOficinaNueva.next();
-//			
-//			Empleado esteEmpleado = EmpleadoDAO.selecEmpleadoConEsteNumEmp(esteNumEmp);
-//			
-//			System.out.println(esteEmpleado);
-//			
-//			if(iteradorDeLosNumEmpDeLosEmpleadosCambiadosALaOficinaNueva.hasNext()) {
-//				System.out.println();
-//			}
-//		}
 		
 		sc.close();
-		
 	}
 
 }

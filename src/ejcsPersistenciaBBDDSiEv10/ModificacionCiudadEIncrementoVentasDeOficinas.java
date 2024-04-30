@@ -16,12 +16,18 @@ public class ModificacionCiudadEIncrementoVentasDeOficinas {
 		if(!listaDeOficinas.isEmpty()) {
 			Scanner sc = new Scanner(System.in);
 			
-			int oficina = 0, incrementoVentas = 0;
+			// Visualización de todas las oficinas
+			System.out.println("Las oficinas de la empresa son:\n");
+			
+			OficinaDAO.mostrarTodasEstasOficinasEnFormatoDeBBDD(listaDeOficinas);
+			
+			int oficina = 0;
+			double incrementoVentas = 0;
 			String ciudad = "";
 			boolean datoIntrodValido;
 			
 			// Modificación de la ciudad
-			System.out.print("Introduce el código de la oficina que quieras mover de ciudad:  ");
+			System.out.print("\n\nIntroduce el código de la oficina que quieras mover de ciudad:  ");
 			do {
 				datoIntrodValido = true;
 				
@@ -66,8 +72,8 @@ public class ModificacionCiudadEIncrementoVentasDeOficinas {
 					+ ciudad + ", son:\n");
 			OficinaDAO.mostrarTodasEstasOficinasEnFormatoDeBBDD(OficinaDAO.obtenerArrayListDeTodasLasOficinas());
 			
-			// Modificación de las ventas
-			System.out.print("\nIntroduce el código de la oficina que quieras aumentar sus ventas:  ");
+			// Incremento de las ventas
+			System.out.print("\nIntroduce el código de la oficina que quieras incrementar sus ventas:  ");
 			do {
 				datoIntrodValido = true;
 				
@@ -98,7 +104,7 @@ public class ModificacionCiudadEIncrementoVentasDeOficinas {
 				datoIntrodValido = true;
 				
 				try {
-					incrementoVentas = sc.nextInt();
+					incrementoVentas = sc.nextDouble();
 				} catch(InputMismatchException excep) {
 					datoIntrodValido = false;
 					

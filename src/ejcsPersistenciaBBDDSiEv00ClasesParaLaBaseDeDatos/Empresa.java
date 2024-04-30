@@ -6,12 +6,12 @@ public class Empresa {
 
     private String id;
     private String nombre;
-    private HashMap<Integer,Oficina> listaOficinas;
+    private LinkedHashMap<Integer,Oficina> listaOficinas;
 
     public Empresa(String id, String nombre) {
         this.id = id;
         this.nombre = nombre;
-        listaOficinas = new HashMap<>();
+        listaOficinas = new LinkedHashMap<>();
     }
 
     public String getId() {
@@ -30,12 +30,12 @@ public class Empresa {
         this.nombre = nombre;
     }
 
-    public HashMap<Integer, Oficina> getListaOficinas() {
+    public LinkedHashMap<Integer, Oficina> getListaOficinas() {
         return listaOficinas;
     }
 
     public void setListaOficinas(List<Oficina> listaOficinas) {
-        this.listaOficinas = new HashMap<>();
+        this.listaOficinas = new LinkedHashMap<>();
 
         Iterator<Oficina> iteradorDeOficinas = listaOficinas.iterator();
 
@@ -47,7 +47,7 @@ public class Empresa {
     }
 
     public void setListaOficinas(Set<Oficina> listaOficinas) {
-        this.listaOficinas = new HashMap<>();
+        this.listaOficinas = new LinkedHashMap<>();
 
         Iterator<Oficina> iteradorDeOficinas = listaOficinas.iterator();
 
@@ -79,11 +79,27 @@ public class Empresa {
         listaOficinas.put(oficina.getOficina(),oficina);
     }
     
-    public String obtenerTodasLasOficinasEnFormatoBBDD() {
-    	String texto = "Oficina\tCiudad\t\tSuperficie\tVentas\n";
+//    public void ordenarOficinasPorCodigo() {
+//    	TreeMap<Integer,Oficina> listaOficinasOrdenadas = new TreeMap<Integer,Oficina>(listaOficinas);
+//    	
+//    	listaOficinas = new LinkedHashMap<Integer,Oficina>(listaOficinasOrdenadas);
+//    	
+//    	listaOficinas.putAll(listaOficinasOrdenadas);	
+//    }
+	
+	public String obtenerLaCabeceraDeTodosLosCamposDeLaTablaOficinas() {
+		return "Oficina\tCiudad\t\tSuperficie\tVentas"
+				+ "\n------------------------"
+        		+ "------------------------";
+	}
+    
+    public String obtenerTodasLasOficinasEnFormatoDeBBDD() {
+    	String texto = obtenerLaCabeceraDeTodosLosCamposDeLaTablaOficinas() + "\n";
     	
     	int cantOficinas = listaOficinas.size();
     	int oficinaActual = 1;
+    	
+//    	ordenarOficinasPorCodigo();
     	
     	for(Map.Entry<Integer,Oficina> entrada : listaOficinas.entrySet()){
             Oficina estaOficina = entrada.getValue();

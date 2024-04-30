@@ -33,7 +33,7 @@ public class InsercionEmpleado {
 			try {
 				numemp = sc.nextInt();
 				
-				if(EmpleadoDAO.esNuevoEnLaEmpresa(numemp)) {
+				if(!EmpleadoDAO.hayYaUnEmpleadoConEseNumEmp(numemp)) {
 					System.out.println("\nNúmero de empleado válido. Continúe introduciendo "
 							+ "los datos del empleado.");
 				} else {
@@ -154,7 +154,7 @@ public class InsercionEmpleado {
 				contrato = Date.valueOf(fechaLocalDate);
 			} catch(InputMismatchException excep) {
 				datoIntrodValido = false;
-				sc.nextInt();
+				sc.nextLine();
 				
 				System.out.println("\nLos datos introducidos tienen que ser números enteros."
 						+ "\nVuelva a introducir la fecha.");

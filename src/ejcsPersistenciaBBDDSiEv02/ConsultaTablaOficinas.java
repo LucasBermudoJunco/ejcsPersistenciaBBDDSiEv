@@ -55,7 +55,7 @@ public class ConsultaTablaOficinas {
         // Visualización del contenido de la empresa tras haber leído la base de datos
         System.out.println("\nDatos de las oficinas de la empresa:\n");
 
-        System.out.println(corporacion.obtenerTodasLasOficinasEnFormatoBBDD());
+        System.out.println(corporacion.obtenerTodasLasOficinasEnFormatoDeBBDD());
 
     }
 

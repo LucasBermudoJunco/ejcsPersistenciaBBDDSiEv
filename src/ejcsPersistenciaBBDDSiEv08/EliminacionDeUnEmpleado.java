@@ -55,7 +55,7 @@ public class EliminacionDeUnEmpleado {
 			}
 		}while(!datoIntrodValido);
 				
-		if(EmpleadoDAO.esNuevoEnLaEmpresa(numemp)) {
+		if(!EmpleadoDAO.hayYaUnEmpleadoConEseNumEmp(numemp)) {
 			elEmpleadoEstaEnLaEmpresa = false;
 			
 			System.out.println("\nNo hay ningún empleado con ese número en la empresa, "

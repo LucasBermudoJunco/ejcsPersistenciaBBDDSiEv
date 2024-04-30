@@ -143,8 +143,8 @@ public class EmpleadoDAO {
         		+ "---------------------------------------";
 	}
 	
-	public static boolean esNuevoEnLaEmpresa(int numEmpAComprobar) {
-		boolean esNuevoEnLaEmpresa = true;
+	public static boolean hayYaUnEmpleadoConEseNumEmp(int numEmpAComprobar) {
+		boolean hayYaUnEmpleadoConEseNumEmp = false;
 		
 		try {
 			Connection con = connect();
@@ -157,7 +157,7 @@ public class EmpleadoDAO {
 			ResultSet rs = sentPrep.executeQuery();
 			
 			if(rs.next()) {
-				esNuevoEnLaEmpresa = false;
+				hayYaUnEmpleadoConEseNumEmp = true;
 			}
 			
 			con.close();
@@ -166,7 +166,7 @@ public class EmpleadoDAO {
 			excep.printStackTrace();
 		}
 		
-		return esNuevoEnLaEmpresa;
+		return hayYaUnEmpleadoConEseNumEmp;
 	}
 	
 	public static String obtenerTodosLosEmpleadosDeLaTablaEmpleados() {
@@ -320,8 +320,6 @@ public class EmpleadoDAO {
 		ArrayList<Empleado> listaEmpleadosDeEstaOficina = selecEmpleadosDeEstaOficina(oficinaIntrod);
 		
 		if(!listaEmpleadosDeEstaOficina.isEmpty()) {
-            texto += "NumEmp\tNombre\t\t\tEdad\tOficina\tPuesto\t\t\tContrato\n";
-			
 			Iterator<Empleado> iteradorEmpleados = listaEmpleadosDeEstaOficina.iterator();
 			
 			while(iteradorEmpleados.hasNext()) {
@@ -381,6 +379,76 @@ public class EmpleadoDAO {
 		}
 		
 		return listaNumEmpDeLosEmpleadosDeEstaOficina;
+	}
+	
+	public static String obtenerTodosLosEmpleadosDeEstaListaDeEmpleados(ArrayList<Integer> listaDeNumEmpDeEstosEmpleados) {
+		String consultaTotal = "";
+		
+		if(!listaDeNumEmpDeEstosEmpleados.isEmpty()) {
+			try {
+				Connection con = connect();
+				
+				Iterator<Integer> iteradorDeLosNumEmp = listaDeNumEmpDeEstosEmpleados.iterator();
+				
+				while(iteradorDeLosNumEmp.hasNext()) {
+					Integer esteNumEmp = iteradorDeLosNumEmp.next();
+				
+					String accionSQL = "Select * from empleados where numemp = ?";
+					PreparedStatement sentPrep = con.prepareStatement(accionSQL);
+					
+					sentPrep.setInt(1, esteNumEmp);
+					
+					ResultSet rs = sentPrep.executeQuery();
+					
+					if(rs.next()) {
+						int numemp = rs.getInt("numemp");
+						String nombre = rs.getString("nombre");
+						int edad = rs.getInt("edad");
+						int oficina = rs.getInt("oficina");
+						String puesto = rs.getString("puesto");
+						Date contrato = rs.getDate("contrato");
+						
+						String estaLineaDeLaConsulta = "";
+		                estaLineaDeLaConsulta += numemp + "\t";
+		                estaLineaDeLaConsulta += nombre;
+		                if(nombre.length() < 8){
+		                    estaLineaDeLaConsulta += "\t\t\t";
+		                } else if(nombre.length() < 16){
+		                    estaLineaDeLaConsulta += "\t\t";
+		                } else{
+		                    estaLineaDeLaConsulta += "\t";
+		                }
+		                estaLineaDeLaConsulta += edad + "\t";
+		                estaLineaDeLaConsulta += oficina + "\t";
+		                estaLineaDeLaConsulta += puesto;
+		                if(puesto.length() < 8){
+		                    estaLineaDeLaConsulta += "\t\t\t";
+		                } else if(puesto.length() < 16){
+		                    estaLineaDeLaConsulta += "\t\t";
+		                } else{
+		                    estaLineaDeLaConsulta += "\t";
+		                }
+		                estaLineaDeLaConsulta += contrato;
+		                
+		                consultaTotal += estaLineaDeLaConsulta;
+		                
+		                if(iteradorDeLosNumEmp.hasNext()) {
+		                	consultaTotal += "\n";
+		                }
+					}
+				
+				}
+				
+				con.close();
+			} catch(SQLException excep) {
+				System.out.println("Consulta de los empleados fallida.");
+				excep.getStackTrace();
+			}
+		} else {
+			consultaTotal = "La lista de numemp está vacía, por lo que no se puede obtener ningún empleado de ella";
+		}
+		
+		return consultaTotal;
 	}
 	
 	public static void actualizEmpleadoConEsteNumEmp(int numempEmpleado, Empleado datosNuevosDelEmpleado){

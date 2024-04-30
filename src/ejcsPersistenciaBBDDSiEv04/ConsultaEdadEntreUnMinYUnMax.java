@@ -32,8 +32,13 @@ public class ConsultaEdadEntreUnMinYUnMax {
                 valorMin = sc.nextInt();
                 System.out.print("Introduce el valor máximo para la edad que quieras consultar:  ");
                 valorMax = sc.nextInt();
-
-                if(valorMin > valorMax){
+                
+                if(valorMin < 16 || valorMax < 16) {
+                    datosIntrodValidos = false;
+                	
+                    System.out.println("\nLas edad de los empleados no pueden ser menor que 16."
+                    		+ "\nVuelve a introducirlas de nuevo.\n");
+                } else if(valorMin > valorMax){
                     datosIntrodValidos = false;
 
                     System.out.println("\nEl valor mínimo no puede ser más grande que el máximo." +

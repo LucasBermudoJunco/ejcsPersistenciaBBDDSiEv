@@ -136,6 +136,32 @@ public class OficinaDAO {
         		+ "------------------------";
 	}
 	
+	public static boolean hayYaUnaOficinaConEseCodigo(int oficinaAComprobar) {
+		boolean esaOficinaExiste = false;
+		
+		try {
+			Connection con = connect();
+			String accionSQL = "select 'Sí existe una oficina con ese número de identificación' from "
+					+ "oficinas where oficina = ? limit 1";
+			PreparedStatement sentPrep = con.prepareStatement(accionSQL);
+			
+			sentPrep.setInt(1, oficinaAComprobar);
+			
+			ResultSet rs = sentPrep.executeQuery();
+			
+			if(rs.next()) {
+				esaOficinaExiste = true;
+			}
+			
+			con.close();
+		} catch(SQLException excep) {
+			System.out.println("Comprobación del número de identificación de la oficina fallida.");
+			excep.printStackTrace();
+		}
+		
+		return esaOficinaExiste;
+	}
+	
 	public static ArrayList<Oficina> obtenerArrayListDeTodasLasOficinas(){
 		ArrayList<Oficina> listaOficinas = new ArrayList<>();
 		
@@ -197,57 +223,6 @@ public class OficinaDAO {
 		return hayOficinas;
 	}
 	
-	public static boolean hayYaUnaOficinaConEseCodigo(int oficinaAComprobar) {
-		boolean esaOficinaExiste = false;
-		
-		try {
-			Connection con = connect();
-			String accionSQL = "select 'Sí existe una oficina con ese número de identificación' from "
-					+ "oficinas where oficina = ? limit 1";
-			PreparedStatement sentPrep = con.prepareStatement(accionSQL);
-			
-			sentPrep.setInt(1, oficinaAComprobar);
-			
-			ResultSet rs = sentPrep.executeQuery();
-			
-			if(rs.next()) {
-				esaOficinaExiste = true;
-			}
-			
-			con.close();
-		} catch(SQLException excep) {
-			System.out.println("Comprobación del número de identificación de la oficina fallida.");
-			excep.printStackTrace();
-		}
-		
-		return esaOficinaExiste;
-	}
-	
-//	public static boolean hayOficinas() {
-//		boolean hayOficinas = false;
-//		
-//		try {
-//			Connection con = connect();
-//			Statement sent = con.createStatement();
-//			
-//			String accionSQL = "select count(*) as cantOficinas from oficinas";
-//			ResultSet rs = sent.executeQuery(accionSQL);
-//			
-//			rs.next();
-//			
-//			int cantOficinas = rs.getInt("cantOficinas");
-//			
-//			if(cantOficinas > 0) {
-//				hayOficinas = true;
-//			}
-//		} catch(SQLException excep) {
-//			System.out.println("Consulta de las oficinas fallida.");
-//			excep.printStackTrace();
-//		}
-//		
-//		return hayOficinas;
-//	}
-	
 	public static ArrayList<Oficina> selecOficinasConSuperfiMayorA(int superficieIntrod){
 		ArrayList<Oficina> listaOficinasConSuperfMayor = new ArrayList<>();
 		
@@ -306,7 +281,7 @@ public class OficinaDAO {
 		return oficinaModificada;
 	}
 	
-	public static boolean incrementarVentas(int oficina, int incrementoVentas) {
+	public static boolean incrementarVentas(int oficina, double incrementoVentas) {
 		boolean ventasIncrementadas = false;
 		
 		if(hayYaUnaOficinaConEseCodigo(oficina)) {
@@ -315,7 +290,7 @@ public class OficinaDAO {
 				String accionSQL = "update oficinas set ventas = ventas+? where oficina = ?";
 				PreparedStatement sentPrep = con.prepareStatement(accionSQL);
 				
-				sentPrep.setInt(1, incrementoVentas);
+				sentPrep.setDouble(1, incrementoVentas);
 				sentPrep.setInt(2, oficina);
 				
 				sentPrep.executeUpdate();
