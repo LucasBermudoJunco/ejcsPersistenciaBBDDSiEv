@@ -25,7 +25,7 @@ public class ConsultaTablaOficinas {
 
         try{
             con = DriverManager.getConnection(url, user, password);
-            System.out.println("\nConexión realizada con éxito.");
+            System.out.println("Conexión realizada con éxito.");
             st = con.createStatement();
 
             consulta = "select * from oficinas";
@@ -53,9 +53,9 @@ public class ConsultaTablaOficinas {
         }
 
         // Visualización del contenido de la empresa tras haber leído la base de datos
-        System.out.println("Oficinas de la empresa:");
+        System.out.println("\nDatos de las oficinas de la empresa:\n");
 
-        System.out.println(corporacion);
+        System.out.println(corporacion.obtenerTodasLasOficinasEnFormatoBBDD());
 
     }
 

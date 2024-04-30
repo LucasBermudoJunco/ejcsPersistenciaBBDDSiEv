@@ -12,13 +12,15 @@ public class ConsultaOficinasEnDichaCiudad {
         Connection con;
         Statement st;
         ResultSet rs;
-        String url = "jdbc:mysql://localhost:3306/erdgvsrtdg";
+        String url = "jdbc:mysql://localhost:3306/Empresa";
         String user = "root";
         String password = "admin";
         String consulta;
-
+        
+    	String datosDeLaConsulta = "Oficina\tCiudad\t\tSuperficie\tVentas\n";
         String ciudad;
-        int oficina = 0;
+        int oficina = 0, superficie = 0;
+        double ventas = 0.0;
 
         boolean datoIntrodValido, tieneAlgunaOficina = false, mostrarMensajeInicial = true;
 
@@ -47,24 +49,36 @@ public class ConsultaOficinasEnDichaCiudad {
                 if(mostrarMensajeInicial){
                     tieneAlgunaOficina = true;
 
-                    System.out.print("\nLa(s) oficina(s) de esta empresa en " + ciudad + " es/son la(s) oficina(s) número:  ");
+                    System.out.println("\nLa(s) oficina(s) de esta empresa en " + ciudad + " es/son la(s) oficina(s):\n");
 
                     mostrarMensajeInicial = false;
                 }
 
                 oficina = rs.getInt("oficina");
+                ciudad = rs.getString("ciudad");
+                superficie = rs.getInt("superficie");
+                ventas = rs.getDouble("ventas");
 
-                System.out.print(oficina);
+                // Creación del texto de cada línea de la consulta
+                datosDeLaConsulta += oficina + "\t";
+                datosDeLaConsulta += ciudad + "\t";
+                if(ciudad.length() < 8){
+                	datosDeLaConsulta += "\t";
+                } 
+                datosDeLaConsulta += superficie + "\t\t";
+                datosDeLaConsulta += ventas;
 
                 // Añadido de una coma en caso de que sigan quedando más filas por recorrer
                 // (es decir, según el método usado (´´isLast()``): que el lector de las filas
                 // no esté situado en la última fila)
                 if(!rs.isLast()){
-                    System.out.print(", ");
+                	datosDeLaConsulta += "\n";
                 }
             }
 
-            if(!tieneAlgunaOficina){
+            if(tieneAlgunaOficina){
+                System.out.print(datosDeLaConsulta);
+            } else {
                 System.out.print("\nNo hay ninguna oficina de esta empresa en la ciudad ´´" + ciudad + "``.");
             }
             

@@ -11,7 +11,7 @@ public class ModificacionCiudadEIncrementoVentasDeOficinas {
 
 	public static void main(String[] args) {
 		
-		ArrayList<Oficina> listaDeOficinas = OficinaDAO.read();
+		ArrayList<Oficina> listaDeOficinas = OficinaDAO.obtenerArrayListDeTodasLasOficinas();
 		
 		if(!listaDeOficinas.isEmpty()) {
 			Scanner sc = new Scanner(System.in);
@@ -28,7 +28,7 @@ public class ModificacionCiudadEIncrementoVentasDeOficinas {
 				try {
 					oficina = sc.nextInt();
 					
-					if(OficinaDAO.esaOficinaExiste(oficina)) {
+					if(OficinaDAO.hayYaUnaOficinaConEseCodigo(oficina)) {
 						System.out.println("\nOficina válida.");
 					} else {
 						datoIntrodValido = false;
@@ -64,7 +64,7 @@ public class ModificacionCiudadEIncrementoVentasDeOficinas {
 			
 			System.out.println("\nLos datos de las oficinas, con la oficina " + oficina + " cambiada a "
 					+ ciudad + ", son:\n");
-			OficinaDAO.mostrarTodasLasOficinasEnFormatoDeBBDD();
+			OficinaDAO.mostrarTodasEstasOficinasEnFormatoDeBBDD(OficinaDAO.obtenerArrayListDeTodasLasOficinas());
 			
 			// Modificación de las ventas
 			System.out.print("\nIntroduce el código de la oficina que quieras aumentar sus ventas:  ");
@@ -74,7 +74,7 @@ public class ModificacionCiudadEIncrementoVentasDeOficinas {
 				try {
 					oficina = sc.nextInt();
 					
-					if(OficinaDAO.esaOficinaExiste(oficina)) {
+					if(OficinaDAO.hayYaUnaOficinaConEseCodigo(oficina)) {
 						System.out.println("\nOficina válida.");
 					} else {
 						datoIntrodValido = false;
@@ -122,7 +122,7 @@ public class ModificacionCiudadEIncrementoVentasDeOficinas {
 						+ " disminuidas en " + (incrementoVentas * -1) + ", son:\n");
 			}
 			
-			OficinaDAO.mostrarTodasLasOficinasEnFormatoDeBBDD();
+			OficinaDAO.mostrarTodasEstasOficinasEnFormatoDeBBDD(OficinaDAO.obtenerArrayListDeTodasLasOficinas());
 			
 			sc.close();
 		} else {
@@ -133,3 +133,4 @@ public class ModificacionCiudadEIncrementoVentasDeOficinas {
 	}
 
 }
+

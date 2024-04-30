@@ -5,10 +5,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class OficinaDAO {
+	
+	// MÉTODOS COMUNES
 	
 	public static Connection connect() {
 		Connection con = null;
@@ -26,7 +28,115 @@ public class OficinaDAO {
 		return con;
 	}
 	
-	public static ArrayList<Oficina> read(){
+	public static void create(Oficina oficinaIntrod) {
+		if(oficinaIntrod != null) {
+			Connection con = connect();
+			
+			if(con != null) {
+				String accionSQL = "insert into oficinas values (?,?,?,?)";
+				
+				try {
+					PreparedStatement sentPrep = con.prepareStatement(accionSQL);
+
+					sentPrep.setInt(1, oficinaIntrod.getOficina());
+					sentPrep.setString(2, oficinaIntrod.getCiudad());
+					sentPrep.setInt(3, oficinaIntrod.getSuperficie());
+					sentPrep.setDouble(4, oficinaIntrod.getVentas());
+					
+					sentPrep.executeQuery();
+					
+					con.close();
+				} catch(SQLException excep) {
+					System.out.println("Inserción de la oficina fallida.");
+					excep.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	public static Oficina read(int idOficina) {
+		Oficina oficinaConsultada = null;
+		
+		try {
+			Connection con = connect();
+			String accionSQL = "Select * from oficinas where oficina = ?";
+			PreparedStatement sentPrep = con.prepareStatement(accionSQL);
+			
+			sentPrep.setInt(1, idOficina);
+			
+			ResultSet rs = sentPrep.executeQuery();
+			
+			if(rs.next()) {
+				// Aquí iría el int numemp, pero es precisamente lo que
+				// hemos introducido como parámetro
+				int oficina = rs.getInt("oficina");
+				String ciudad = rs.getString("ciudad");
+				int superficie = rs.getInt("superficie");
+				double ventas = rs.getDouble("ventas");
+				
+				oficinaConsultada = new Oficina(oficina,ciudad,superficie,ventas);
+			}
+			
+			con.close();
+		} catch(SQLException excep) {
+			System.out.println("Consulta del empleado fallida.");
+			excep.getStackTrace();
+		}
+		
+		return oficinaConsultada;
+	}
+	
+	public static void update(Oficina oficinaIntrod) {
+		if(oficinaIntrod != null) {
+			try {
+				Connection con = connect();
+				String accionSQL = "update Oficinas set "
+						+ "ciudad = ?, superficie = ?, ventas = ?"
+						+ "where oficina = ?";
+				
+				PreparedStatement sentPrep = con.prepareStatement(accionSQL);
+				
+				sentPrep.setString(1, oficinaIntrod.getCiudad());
+				sentPrep.setInt(2, oficinaIntrod.getSuperficie());
+				sentPrep.setDouble(3, oficinaIntrod.getVentas());
+				sentPrep.setInt(4, oficinaIntrod.getOficina());
+				
+				sentPrep.executeUpdate();
+				
+				con.close();
+			} catch(SQLException excep) {
+				System.out.println("Actualización de los empleados fallida.");
+				excep.printStackTrace();
+			}
+		}
+	}
+	
+	public static void delete(int idOficina) {
+		try {
+			Connection con = connect();
+			String accionSQL = "delete from oficinas where oficina = ?";
+			
+			PreparedStatement sentPrep = con.prepareStatement(accionSQL);
+			
+			sentPrep.setInt(1, idOficina);
+			
+			sentPrep.executeUpdate();
+			
+			con.close();
+		} catch(SQLException excep) {
+			excep.printStackTrace();
+		}
+	}
+	
+	// MÉTODOS ESPECÍFICOS
+	
+	public static String obtenerLaCabeceraDeTodosLosCamposDeLaTablaOficinas() {
+		return "Oficina\tCiudad\t\tSuperficie\tVentas"
+				+ "\n------------------------"
+        		+ "------------------------";
+	}
+	
+	public static ArrayList<Oficina> obtenerArrayListDeTodasLasOficinas(){
 		ArrayList<Oficina> listaOficinas = new ArrayList<>();
 		
 		try {
@@ -55,42 +165,39 @@ public class OficinaDAO {
 		return listaOficinas;
 	}
 	
-	public static boolean mostrarTodasLasOficinasEnFormatoDeBBDD() {
+	public static boolean mostrarTodasEstasOficinasEnFormatoDeBBDD(ArrayList<Oficina> listaDeOficinas) {
 		boolean hayOficinas = false;
 		
-		Connection con = connect();
-		String accionSQL = "select * from oficinas";
-		try {
-			Statement sent = con.createStatement();
+		if(!listaDeOficinas.isEmpty()) {
+			hayOficinas = true;
 			
-			ResultSet rs = sent.executeQuery(accionSQL);
+	    	String texto = obtenerLaCabeceraDeTodosLosCamposDeLaTablaOficinas() + "\n";
+	    	
+			Iterator<Oficina> iteradorOficinas = listaDeOficinas.iterator();
 			
-			while(rs.next()) {
-				hayOficinas = true;
-				
-				int oficina = rs.getInt("oficina");
-				String ciudad = rs.getString("ciudad");
-				int superficie = rs.getInt("superficie");
-				double ventas = rs.getDouble("ventas");
-				
-				Oficina estaOficina = new Oficina(oficina,ciudad,superficie,ventas);
-				
-				System.out.println(estaOficina);
-				
-				if(!rs.isLast()) {
-					System.out.println();
-				}
+			while(iteradorOficinas.hasNext()) {
+				Oficina estaOficina = iteradorOficinas.next();
+
+	            texto += estaOficina.getOficina() + "\t";
+	            texto += estaOficina.getCiudad() + "\t";
+	            if(estaOficina.getCiudad().length() < 8){
+	            	texto += "\t";
+	            } 
+	            texto += estaOficina.getSuperficie() + "\t\t";
+	            texto += estaOficina.getVentas();
+	            
+	            if(iteradorOficinas.hasNext()) {
+	            	texto += "\n";
+	            }
 			}
 			
-			con.close();
-		} catch (SQLException excep) {
-			excep.printStackTrace();
+			System.out.println(texto);
 		}
 		
 		return hayOficinas;
 	}
 	
-	public static boolean esaOficinaExiste(int oficinaAComprobar) {
+	public static boolean hayYaUnaOficinaConEseCodigo(int oficinaAComprobar) {
 		boolean esaOficinaExiste = false;
 		
 		try {
@@ -177,7 +284,7 @@ public class OficinaDAO {
 	public static boolean modificarCiudad(int oficina, String ciudad) {
 		boolean oficinaModificada = false;
 		
-		if(esaOficinaExiste(oficina)) {
+		if(hayYaUnaOficinaConEseCodigo(oficina)) {
 			try {
 				Connection con = connect();
 				String accionSQL = "update oficinas set ciudad = ? where oficina = ?";
@@ -202,7 +309,7 @@ public class OficinaDAO {
 	public static boolean incrementarVentas(int oficina, int incrementoVentas) {
 		boolean ventasIncrementadas = false;
 		
-		if(esaOficinaExiste(oficina)) {
+		if(hayYaUnaOficinaConEseCodigo(oficina)) {
 			try {
 				Connection con = connect();
 				String accionSQL = "update oficinas set ventas = ventas+? where oficina = ?";

@@ -78,5 +78,33 @@ public class Empresa {
     public void anyadirOficina(Oficina oficina) {
         listaOficinas.put(oficina.getOficina(),oficina);
     }
+    
+    public String obtenerTodasLasOficinasEnFormatoBBDD() {
+    	String texto = "Oficina\tCiudad\t\tSuperficie\tVentas\n";
+    	
+    	int cantOficinas = listaOficinas.size();
+    	int oficinaActual = 1;
+    	
+    	for(Map.Entry<Integer,Oficina> entrada : listaOficinas.entrySet()){
+            Oficina estaOficina = entrada.getValue();
+
+            texto += estaOficina.getOficina() + "\t";
+            texto += estaOficina.getCiudad() + "\t";
+            if(estaOficina.getCiudad().length() < 8){
+            	texto += "\t";
+            } 
+            texto += estaOficina.getSuperficie() + "\t\t";
+            texto += estaOficina.getVentas();
+            
+            if(oficinaActual < cantOficinas) {
+            	texto += "\n";
+            }
+            
+            oficinaActual++;
+        }
+    	
+    	return texto;
+    }
 
 }
+

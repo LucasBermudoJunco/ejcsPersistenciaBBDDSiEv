@@ -101,7 +101,7 @@ public class InsercionEmpleado {
 					
 					System.out.print("\nEl número de identificación de la oficina tiene que ser mayor que 0."
 							+ "\n\nIntroduzca un número de oficina mayor que 0:  ");
-				} else if(!OficinaDAO.esaOficinaExiste(oficina)) {
+				} else if(!OficinaDAO.hayYaUnaOficinaConEseCodigo(oficina)) {
 					datoIntrodValido = false;
 					
 					System.out.print("\nNo hay ninguna oficina con ese número de identificación."
@@ -173,13 +173,17 @@ public class InsercionEmpleado {
 		EmpleadoDAO.create(trabajador);
 		
 		// Comprobación de que el empleado ha sido insertado correctamente en la base de datos
-		if(EmpleadoDAO.selecEmpleadoConEsteNumEmp(trabajador.getNumemp()) != null) {
-			System.out.println("\nEl empleado ha sido insertado correctamente");
-			
-			Empleado empleadoConsultado = EmpleadoDAO.selecEmpleadoConEsteNumEmp(trabajador.getNumemp());
-			
-			System.out.println("\nLos datos del empleado, tomados de la base de datos, son:\n\n"
-					+ empleadoConsultado);
+		Empleado empleadoConsultado;
+		
+		if((empleadoConsultado = EmpleadoDAO.read(trabajador.getNumemp())) != null) {
+			System.out.println("\nEl empleado ha sido insertado correctamente");			
+			System.out.println("\nComprobación de que el empleado ha sido insertado correctamente "
+					+ "en la base de datos:");
+			System.out.println("\nLos datos del empleado insertado, tomados de la base de datos, son:\n\n"
+					+ EmpleadoDAO.obtenerLaCabeceraDeTodosLosCamposDeLaTablaEmpleado() + "\n"
+					+ EmpleadoDAO.obtenerTodosLosDatosDeEsteEmpleado(empleadoConsultado.getNumemp()));
+		} else {
+			System.out.println("\nEl empleado no ha sido insertado.");
 		}
 		
 		sc.close();

@@ -20,16 +20,16 @@ public class ConsultaTablaEmpleados {
 
         try{
             con = DriverManager.getConnection(url, user, password);
-            System.out.println("Conexión realizada con éxito.");
+            System.out.println("\nConexión realizada con éxito.");
             st = con.createStatement();
 
             consulta = "select * from empleados";
             rs = st.executeQuery(consulta);
 
             System.out.println("\nInformación de la tabla Empleados:\n");
-            System.out.println("NumEmp\tNombre\t\t\tEdad\tOficina\tPuesto\t\t\t\t\t\tContrato");
+            System.out.println("NumEmp\tNombre\t\t\tEdad\tOficina\tPuesto\t\t\tContrato");
             System.out.println("------------------------------------------" +
-                    "-----------------------------------------");
+                    "--------------------------------------------");
 
             // Recorrido de la tabla Empleados
             while(rs.next()) {
@@ -46,24 +46,20 @@ public class ConsultaTablaEmpleados {
                 estaLineaDeLaConsulta += numEmp + "\t";
                 estaLineaDeLaConsulta += nombre;
                 if(nombre.length() < 8){
-                    estaLineaDeLaConsulta += "\t\t\t\t";
-                } else if(nombre.length() < 12){
                     estaLineaDeLaConsulta += "\t\t\t";
                 } else if(nombre.length() < 16){
                     estaLineaDeLaConsulta += "\t\t";
                 } else{
                     estaLineaDeLaConsulta += "\t";
                 }
-                estaLineaDeLaConsulta += edad + "\t\t";
-                estaLineaDeLaConsulta += oficina + "\t\t";
-                estaLineaDeLaConsulta += puesto + "\t\t";
+                estaLineaDeLaConsulta += edad + "\t";
+                estaLineaDeLaConsulta += oficina + "\t";
+                estaLineaDeLaConsulta += puesto;
                 if(puesto.length() < 8){
-                    estaLineaDeLaConsulta += "\t\t\t\t";
-                } else if(puesto.length() < 12){
                     estaLineaDeLaConsulta += "\t\t\t";
                 } else if(puesto.length() < 16){
                     estaLineaDeLaConsulta += "\t\t";
-                } else if(puesto.length() < 21){
+                } else{
                     estaLineaDeLaConsulta += "\t";
                 }
                 estaLineaDeLaConsulta += contrato;

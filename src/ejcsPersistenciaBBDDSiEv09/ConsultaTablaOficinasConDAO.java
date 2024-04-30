@@ -2,7 +2,6 @@ package ejcsPersistenciaBBDDSiEv09;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.Iterator;
 import java.util.Scanner;
 
 import ejcsPersistenciaBBDDSiEv00ClasesParaLaBaseDeDatos.Oficina;
@@ -13,9 +12,9 @@ public class ConsultaTablaOficinasConDAO {
 	public static void main(String[] args) {
 		
 		// Obtención de todas las oficinas
-		ArrayList<Oficina> listaDeOficinas = OficinaDAO.read();
+		ArrayList<Oficina> listaDeOficinas = OficinaDAO.obtenerArrayListDeTodasLasOficinas();
 		
-		// Comprobación de si hay por lo menos 1 oficina
+		// Comprobación de si hay por lo menos 1 oficina en la base de datos
 		if(!listaDeOficinas.isEmpty()) {
 			Scanner sc = new Scanner(System.in);
 			
@@ -23,20 +22,9 @@ public class ConsultaTablaOficinasConDAO {
 			boolean datoIntrodValido;
 			
 			// Visualización de todas las oficinas
-			
 			System.out.println("Las oficinas de la empresa son:\n");
 			
-			Iterator<Oficina> iteradorDeOficinas = listaDeOficinas.iterator();
-			
-			while(iteradorDeOficinas.hasNext()) {
-				Oficina estaOficina = iteradorDeOficinas.next();
-				
-				System.out.println(estaOficina);
-				
-				if(iteradorDeOficinas.hasNext()) {
-					System.out.println();
-				}
-			}
+			OficinaDAO.mostrarTodasEstasOficinasEnFormatoDeBBDD(listaDeOficinas);
 			
 			// Filtrado de las Oficinas por superficie mayor a una determinada superficie
 			System.out.print("\n\nIntroduce una superficie para que se muestren las oficinas "
@@ -61,24 +49,15 @@ public class ConsultaTablaOficinasConDAO {
 				}
 			} while(!datoIntrodValido);
 			
+			// Obtención de las oficinas con superficie mayor a la indicada
 			ArrayList<Oficina> listaOficinasConSuperfMayor = 
 					OficinaDAO.selecOficinasConSuperfiMayorA(superficieIntrod);
-			
+
+			// Visualización de las oficinas con superficie mayor a la indicada
 			if(!listaOficinasConSuperfMayor.isEmpty()) {
-				System.out.println("\n\nLa(s) oficina(s) con superficie mayor a "
-						+ superficieIntrod + " es/son:\n");
+				System.out.println("\nLas oficinas de la empresa con superficie mayor a " + superficieIntrod + " son:\n");
 				
-				iteradorDeOficinas = listaOficinasConSuperfMayor.iterator();
-				
-				while(iteradorDeOficinas.hasNext()) {
-					Oficina estaOficina = iteradorDeOficinas.next();
-					
-					System.out.println(estaOficina);
-					
-					if(iteradorDeOficinas.hasNext()) {
-						System.out.println();
-					}
-				}
+				OficinaDAO.mostrarTodasEstasOficinasEnFormatoDeBBDD(listaOficinasConSuperfMayor);
 			} else {
 				System.out.println("\n\nNo hay ninguna oficina con superficie mayor a "
 						+ superficieIntrod + ".");

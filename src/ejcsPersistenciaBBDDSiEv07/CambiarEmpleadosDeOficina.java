@@ -1,11 +1,11 @@
 package ejcsPersistenciaBBDDSiEv07;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.Iterator;
+//import java.util.Iterator;
 import java.util.Scanner;
 
-import ejcsPersistenciaBBDDSiEv00ClasesParaLaBaseDeDatos.Empleado;
+//import ejcsPersistenciaBBDDSiEv00ClasesParaLaBaseDeDatos.Empleado;
 import ejcsPersistenciaBBDDSiEv00ClasesParaLaBaseDeDatos.EmpleadoDAO;
 import ejcsPersistenciaBBDDSiEv00ClasesParaLaBaseDeDatos.OficinaDAO;
 
@@ -30,7 +30,7 @@ public class CambiarEmpleadosDeOficina {
 			try {
 				oficinaOrig = sc.nextInt();
 				
-				if(!OficinaDAO.esaOficinaExiste(oficinaOrig)) {
+				if(!OficinaDAO.hayYaUnaOficinaConEseCodigo(oficinaOrig)) {
 					datosIntrodValidos = false;
 					
 					System.out.print("\nLa oficina introducida no está en la empresa."
@@ -45,7 +45,7 @@ public class CambiarEmpleadosDeOficina {
 			}
 		} while(!datosIntrodValidos);
 		
-		// Oficina original
+		// Oficina nueva
 		System.out.print("\nIntroduce la oficina nueva a la que los empleados de la otra oficina "
 				+ "van a trasladarse:  ");
 		do {
@@ -59,7 +59,7 @@ public class CambiarEmpleadosDeOficina {
 					
 					System.out.print("\nLa oficina nueva no puede ser la misma que la oficina original."
 							+ "\n\nIntroduzca de nuevo una oficina que esté en la empresa:  ");
-				} else if(!OficinaDAO.esaOficinaExiste(oficinaNueva)) {
+				} else if(!OficinaDAO.hayYaUnaOficinaConEseCodigo(oficinaNueva)) {
 					datosIntrodValidos = false;
 					
 					System.out.print("\nLa oficina introducida no está en la empresa."
@@ -76,42 +76,45 @@ public class CambiarEmpleadosDeOficina {
 		
 		// Visualización de los empleados de la ´´oficinaOrig``
 		System.out.println("\nLos datos del/de los empleado(s) que estaba(n) en la oficina " + oficinaOrig + " son:\n");
-		ArrayList<Empleado> listaEmpleadosDeLaOficinaOrig = EmpleadoDAO.selecEmpleadosDeEstaOficina(oficinaOrig);
+		System.out.println(EmpleadoDAO.obtenerLosEmpleadosDeEstaOficina(oficinaOrig));
 		
-		Iterator<Empleado> iteradorDeLosEmpleadosDeLaOficinaOrig = listaEmpleadosDeLaOficinaOrig.iterator();
+//		ArrayList<Empleado> listaEmpleadosDeLaOficinaOrig = EmpleadoDAO.selecEmpleadosDeEstaOficina(oficinaOrig);
+//		
+//		Iterator<Empleado> iteradorDeLosEmpleadosDeLaOficinaOrig = listaEmpleadosDeLaOficinaOrig.iterator();
+//		
+//		while(iteradorDeLosEmpleadosDeLaOficinaOrig.hasNext()) {
+//			Empleado esteEmpleado = iteradorDeLosEmpleadosDeLaOficinaOrig.next();
+//			
+//			System.out.println(esteEmpleado);
+//			
+//			if(iteradorDeLosEmpleadosDeLaOficinaOrig.hasNext()) {
+//				System.out.println();
+//			}
+//		}
 		
-		while(iteradorDeLosEmpleadosDeLaOficinaOrig.hasNext()) {
-			Empleado esteEmpleado = iteradorDeLosEmpleadosDeLaOficinaOrig.next();
-			
-			System.out.println(esteEmpleado);
-			
-			if(iteradorDeLosEmpleadosDeLaOficinaOrig.hasNext()) {
-				System.out.println();
-			}
-		}
-		
-		// Obtención del ´´numemp`` de los empleados de la ´´oficinaOrig``
-		ArrayList<Integer> numEmpDeLosEmpleadosDeLaOficinaOrig = EmpleadoDAO.obtenerLosNumEmpDeLosEmpleadosDeEstaOficina(oficinaOrig);
+//		// Obtención del ´´numemp`` de los empleados de la ´´oficinaOrig``
+//		ArrayList<Integer> numEmpDeLosEmpleadosDeLaOficinaOrig = EmpleadoDAO.obtenerLosNumEmpDeLosEmpleadosDeEstaOficina(oficinaOrig);
 		
 		// Cambio de los empleados de la ´´oficinaOrig`` a la ´´oficinaNueva``
 		EmpleadoDAO.cambiarEmpleadosDeUnaOficinaAOtra(oficinaOrig, oficinaNueva);
 		
 		// Visualización de los empleados cambiados a la ´´oficinaOrig``
 		System.out.println("\nLos datos del/de los empleado(s) cambiado(s) a la oficina " + oficinaNueva + " son:\n");
+		System.out.println(EmpleadoDAO.obtenerLosEmpleadosDeEstaOficina(oficinaNueva));
 		
-		Iterator<Integer> iteradorDeLosNumEmpDeLosEmpleadosCambiadosALaOficinaNueva = numEmpDeLosEmpleadosDeLaOficinaOrig.iterator();
-		
-		while(iteradorDeLosNumEmpDeLosEmpleadosCambiadosALaOficinaNueva.hasNext()) {
-			Integer esteNumEmp = iteradorDeLosNumEmpDeLosEmpleadosCambiadosALaOficinaNueva.next();
-			
-			Empleado esteEmpleado = EmpleadoDAO.selecEmpleadoConEsteNumEmp(esteNumEmp);
-			
-			System.out.println(esteEmpleado);
-			
-			if(iteradorDeLosNumEmpDeLosEmpleadosCambiadosALaOficinaNueva.hasNext()) {
-				System.out.println();
-			}
-		}
+//		Iterator<Integer> iteradorDeLosNumEmpDeLosEmpleadosCambiadosALaOficinaNueva = numEmpDeLosEmpleadosDeLaOficinaOrig.iterator();
+//		
+//		while(iteradorDeLosNumEmpDeLosEmpleadosCambiadosALaOficinaNueva.hasNext()) {
+//			Integer esteNumEmp = iteradorDeLosNumEmpDeLosEmpleadosCambiadosALaOficinaNueva.next();
+//			
+//			Empleado esteEmpleado = EmpleadoDAO.selecEmpleadoConEsteNumEmp(esteNumEmp);
+//			
+//			System.out.println(esteEmpleado);
+//			
+//			if(iteradorDeLosNumEmpDeLosEmpleadosCambiadosALaOficinaNueva.hasNext()) {
+//				System.out.println();
+//			}
+//		}
 		
 		sc.close();
 		
