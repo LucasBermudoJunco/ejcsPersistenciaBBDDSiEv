@@ -20,7 +20,7 @@ public class ConsultaTablaEmpleados {
 
         try{
             con = DriverManager.getConnection(url, user, password);
-            System.out.println("\nConexión realizada con éxito.");
+            System.out.println("Conexión realizada con éxito.");
             st = con.createStatement();
 
             consulta = "select * from empleados";
